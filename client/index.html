@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="format-detection" content="telephone=no"/>
+        <meta name="format-detection" content="email=no"/>
+<meta content="Thesis final" name="Wanlin">
+        <title>Final thesis--By Wanlin Yu</title>
+        <link rel="stylesheet" type="text/css" href="../client/style.css" />
+        <!--[if lt IE 8]><script src="./json3.min.js"></script><![endif]-->
+        <script src="http://realtime.plhwin.com/socket.io/socket.io.js"></script>
+         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <style>
+     body{
+      background:url("./images/back.jpg");
+     }
+     .navbar-inverse .navbar-nav>li>a{
+      color:white;
+      background-color:#b2e2e3;
+     }
+     .navbar-inverse .navbar-nav>li>a:hover{
+      color:#358890;
+      background-color:#b2e2e3;
+     }
+     /*navigation background*/
+     .navbar.navbar-transparent{
+     border:0px solid transparent;
+     background:linear-gradient(rgb(178, 226, 227) 0%, rgb(180, 225, 228) 100%);
+     transition:background 0.25s ease-in-out;
+     border-radius: 0px;
+     height:60px;
+
+     }
+    .navbar-inverse .navbar-brand{
+      color:white;
+      font-size: 22px;
+    }
+
+    .navbar-inverse .navbar-toggle{
+      border:1px solid white;
+    
+    }
+
+    .navbar-inverse .navbar-toggle:focus, .navbar-inverse .navbar-toggle:hover{
+      background-color:#ccc;
+    }
+
+   .input-group .btn btn-default{
+
+    margin-left:auto;  
+    margin-right:auto; 
+    margin-TOP:100PX; 
+    width:20em;  
+
+   }
+   
+
+.wrapper {  
+  margin-top: 20px;
+  margin-bottom: 80px;
+}
+
+.form-signin {
+  max-width: 380px;
+  padding: 15px 35px 45px;
+  margin: 0 auto;
+  background-color: #fff;
+  border: 1px solid rgba(0,0,0,0.1);  
+
+  .form-signin-heading,
+  .checkbox {
+    margin-bottom: 30px;
+  }
+
+  .checkbox {
+    font-weight: normal;
+  }
+
+  .form-control {
+    position: relative;
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+    @include box-sizing(border-box);
+
+    &:focus {
+      z-index: 2;
+    }
+  }
+
+
+
+
+  input[type="text"] {
+    margin-bottom: -1px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  input[type="password"] {
+    margin-bottom: 20px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+}
+
+  </style>
+
+    </head>
+    <body>
+
+        <!--login box-->
+        <div id="loginbox">
+             
+             <!--navi bar-->
+            <nav class="navbar navbar-inverse navbar-transparent" >
+            <div class="container-fluid">
+             <div class="navbar-header">
+               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                 <span class="icon-bar"></span>
+                 <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>                        
+                    </button>
+                    <a class="navbar-brand" >Office Intranet</a>
+                </div>
+                 <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav" style="margin:0px;" >
+               <li><a href="#">Home</a></li>
+               <li><a href="#">About</a></li>
+                  <li><a href="#">Chat room</a></li>
+      
+      
+   
+      <ul class="nav navbar-nav navbar-right" style="margin:0px;">
+        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!--nav bar end-->
+            <div style="width:260px;margin:50px auto;">
+                Please input your information.
+
+
+                <!--login form-->
+                <div class="wrapper">
+    <form class="form-signin">       
+      <h2 class="form-signin-heading">Please login</h2>
+       <input type="text"  class="form-control"  placeholder="Username" id="username" name="username" autofocus="" /><br>
+      
+      <input type="text" class="form-control" name="jobtitle" placeholder="Job title" required="" required=""/><br>
+      <input type="text" class="form-control" name="conference theme" placeholder="Conference theme" required=""/> <br>
+      <input type="password" class="form-control" name="chatroom code" placeholder="Chatroom code" required=""/> <br>    
+
+      
+   <input type="button" style="width:50px;" value="Submit" onclick="CHAT.usernameSubmit();"/>
+    </form>
+  </div>
+  <!--login form end-->
+               
+            </div>
+        </div>
+
+
+        <!--login box end-->
+        <!--top right-->
+        <div id="chatbox" style="display:none;">
+            <div style="background:#3d3d3d;height: 28px; width: 100%;font-size:12px;">
+                <div style="line-height: 28px;color:#fff;">
+                    <span style="text-align:left;margin-left:10px;font-size:24px;">Office Intranet</span>
+                    <span style="float:right; margin-right:10px;"><span id="showusername"></span> | 
+					<a href="javascript:;" onclick="CHAT.logout()" style="color:#fff;">Quit</a></span>
+                </div>
+            </div>
+
+        <!--top right end-->
+        <!--chat box -->
+            <div id="doc">
+                <div id="chat">
+                    <div id="message" class="message" style="background-color:transparent; ">
+<div id="onlinecount" style="background:transparent; font-size:12px; margin-top:10px; margin-left:10px; color:#666;">
+</div>
+                    </div>
+                    <div class="input-box">
+                        <div class="input">
+<input type="text" maxlength="140" placeholder="Please input the content here, and press Ctrl to submit! " id="content" name="content">
+                        </div>
+                        <div class="action">
+                            <button type="button" id="mjr_send" onclick="CHAT.submit();">Submit</button>
+                        </div>
+                        
+       
+                    </div>
+                </div>
+            </div>
+        </div>
+         <!--chat box end-->
+
+
+        <script type="text/javascript" src="../client/client.js"></script>
+    </body>
+</html>

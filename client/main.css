@@ -1,0 +1,279 @@
+     body{
+      background:url("images/bak.png") ;
+      background-repeat: repeat-y;
+      
+     }
+     .navbar-inverse .navbar-nav>li>a{
+      color:white;
+      background-color:#b2e2e3;
+     }
+     .navbar-inverse .navbar-nav>li>a:hover{
+      color:#358890;
+      background-color:#b2e2e3;
+     }
+     /*navigation background*/
+     .navbar.navbar-transparent{
+     border:0px solid transparent;
+     background:linear-gradient(rgb(178, 226, 227) 0%, rgb(180, 225, 228) 100%);
+     transition:background 0.25s ease-in-out;
+     border-radius: 0px;
+     height:60px;
+
+     }
+    .navbar-inverse .navbar-brand{
+      color:white;
+      font-size: 22px;
+    }
+
+    .navbar-inverse .navbar-toggle{
+      border:1px solid white;
+    
+    }
+
+    .navbar-inverse .navbar-toggle:focus, .navbar-inverse .navbar-toggle:hover{
+      background-color:#ccc;
+    }
+
+   .input-group .btn btn-default{
+
+    margin-left:auto;  
+    margin-right:auto; 
+    margin-TOP:100PX; 
+    width:20em;  
+
+   }
+   
+
+.wrapper {  
+  margin-top: 20px;
+  margin-bottom: 80px;
+}
+
+.form-signin {
+  max-width: 380px;
+  padding: 15px 35px 45px;
+  margin: 0 auto;
+  background-color: #fff;
+  border: 1px solid rgba(0,0,0,0.1);  
+
+  .form-signin-heading,
+  .checkbox {
+    margin-bottom: 30px;
+  }
+
+  .checkbox {
+    font-weight: normal;
+  }
+
+  .form-control {
+    position: relative;
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+    @include box-sizing(border-box);
+
+    &:focus {
+      z-index: 2;
+    }
+  }
+
+
+
+
+  input[type="text"] {
+    margin-bottom: -1px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  input[type="password"] {
+    margin-bottom: 20px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+}
+
+
+
+.message {
+   width:50%;
+   min-height:800px;
+   max-height:auto;
+  margin-top:-9px;
+  margin-left:25%;
+  background-color:white;
+
+
+}
+
+
+
+.items {
+   margin-top:38px;
+   margin-left:-500px;
+   text-align: center;
+}
+
+
+/* image setting*/
+#message img {
+    max-width: 99%;
+}
+
+#emojiWrapper {
+    display: none;
+    width: 500px;
+    bottom: 105px;
+    position: absolute;
+    background-color: #aaa;
+    box-shadow: 0 0 10px #555;
+}
+#emojiWrapper img {
+    margin: 2px;
+    padding: 2px;
+    width: 25px;
+    height: 25px;
+}
+#emojiWrapper img:hover {
+    background-color: blue;
+}
+.emoji{
+    display: inline;
+}
+
+select{
+  width:100%;
+  height:34px;
+  color:#555;
+  border:1px solid #ccc;
+}
+
+#Desgin, #IT, #Marketing{
+  color:white;
+  margin-top:20px;
+  font-size:25px;
+  text-align:center;
+  background-color:#c8e8eb;
+}
+
+tbody{
+  text-align: center;
+}
+
+
+
+            /*emoji show*/
+
+            /*.emojiSvg {
+               width: 2em;
+               height: 2em;
+               }
+            
+            div #emoji {
+               
+            }
+            
+            #emojiWrapper {
+                padding: 5px;
+            }*/
+
+/*emoji show end*/
+
+/*clear function*/
+
+.useradd{
+  display:none;
+}
+
+
+/*clear function end*/
+
+
+/*emoji*/
+ul#emoji-list{
+  margin-top: 10px;
+  margin-bottom:50px;
+
+}
+
+#emoji-list li{
+  list-style:none;
+  float:left;
+  margin-bottom: 20px;
+  margin: 15px;
+  padding: 15px;
+  width: 25px;
+  height: 25px;
+}
+
+.close-detail {
+    position: fixed;
+    left:500px;
+    top:460px;
+    background-color: #afafaf; /* grey */
+    border: none;
+    color: white;
+    padding: 10px 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.close-detail:hover{     /*hover effect*/
+ box-shadow: 0px 0px 17px 0px rgba(0,0,0,0.24), 0px 10px 50px 0 rgba(0,0,0,0.19);
+}
+
+
+
+.container2 {
+   position: fixed;
+    border: 1px solid black;
+    top:170px;
+    left:50px;
+    margin:60px auto;
+    max-width: 600px;
+    min-width: 400px;
+    max-height: 300px;
+    min-height: 150px;
+    display: none;
+    background-color: white;
+    overflow:scroll;
+  /*display: none;*/
+    
+}
+
+#emoji-list ul li{
+  text-align: right;
+}
+
+ .emoji-list :hover img{
+    outline-color: yellow;
+    outline-style: solid;
+  
+}
+
+
+
+
+/*emoji end*/
+
+
+/*chart css*/
+.bar-legend li span {
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.bar-legend {
+    list-style: none;
+}
+
+
+/*chart css end*/

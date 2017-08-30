@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="format-detection" content="telephone=no"/>
+        <meta name="format-detection" content="email=no"/>
+        <meta content="Thesis final" name="Wanlin">
+        <title>Final thesis--By Wanlin Yu</title>
+        <link rel="stylesheet" type="text/css" href="./client/style.css" />
+        <!--[if lt IE 8]><script src="./json3.min.js"></script><![endif]-->
+         <link rel="stylesheet" type="text/css" href="./client/main.css" />
+        <script src="http://realtime.plhwin.com/socket.io/socket.io.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="http://code.jquery.com/jquery-1.8.2.min.js" type="text/javascript"></script>  <!--jquery input-->
+        <script src="http://http://code.jquery.com/jquery-1.8.2.min.js.static.runoob.com/libs/jquery/1.10.2/jquery.min.js"></script> <!--jq for clear function-->
+
+    </head>
+    <body>
+
+        <!--login box-->
+        <div id="loginbox">
+             
+             <!--navi bar-->
+            <nav class="navbar navbar-inverse navbar-transparent" >
+            <div class="container-fluid">
+             <div class="navbar-header">
+               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                 <span class="icon-bar"></span>
+                 <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>                        
+                    </button>
+                    <a class="navbar-brand" >Office Intranet</a>
+                </div>
+                 <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav" style="margin:0px;" >
+               <li><a href="#">Home</a></li>
+               <li><a href="calender.html">Calender</a></li>
+                  <li><a href="index.html">Chat room</a></li>
+      
+      
+   
+      <ul class="nav navbar-nav navbar-right" style="margin:0px;">
+        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!--nav bar end-->
+            <div style="width:260px;margin:50px auto;">
+                Please input your information.
+
+
+                <!--login form-->
+                <div class="wrapper">
+      <form class="form-signin">       
+      <h2 class="form-signin-heading">Please login</h2>
+       <input type="text"  class="form-control"  placeholder="Username" id="username" name="username" autofocus="" /><br>
+      
+      <input type="text" class="form-control" name="jobtitle" placeholder="Job title" required="" required=""/><br>
+      <!--<input type="password" class="form-control" name="chatroom code" placeholder="Chatroom code" required=""/><br>-->    
+       <!--form choose function-->
+      <form  action="/action_page.php">
+            <select name="Conference" id="Conference" required="" onchange="javascript:doit();" >
+            <option value="0">Conference theme</option>
+            <option value="1">Desgin department</option>
+            <option value="2">IT department annual conference</option>
+            <option value="3">Marketing department</option>
+
+            </select>
+        <input type="button" style="width:80px; margin-top:35px;" value="Submit" onclick="CHAT.usernameSubmit();"/>
+      </form><br>
+     
+    <!--form choose function end-->
+      
+   
+    </form>
+     </div>
+  <!--login form end-->
+               
+            </div>
+        </div>
+
+
+        <!--login box end-->
+        <!--top right-->
+        <div id="chatbox" style="display:none;">
+            <div style="background:#3d3d3d;height: 28px; width: 100%;font-size:12px;">
+                <div style="line-height: 28px;color:#fff;">
+                    <span style="text-align:left;margin-left:10px;font-size:24px;">Office Intranet</span>
+                    <!--text show-->
+                    <center><input value="Design department " id="Desgin" type="text"  style="display:none;"/> </center>
+                    <center><input value="IT department annual conference" id="IT" type="text" style="display:none;"/></center>
+                    <center><input value="Marketing department" id="Marketing" type="text"  style="display:none;"/></center>
+                    <!--text show end-->
+                    <span style="position:fixed; top:5px; right:10px;"><span id="showusername"></span> | 
+					<a href="javascript:;" onclick="CHAT.logout()" style="color:#fff;">Quit</a></span>
+                </div>
+            </div>
+
+        <!--top right end-->
+        <!--chat box -->
+            <div id="doc">
+                <div id="chat">
+                       
+                    <div id="message" class="message" style=" "> 
+                    <div id="onlinecount" style="background:transparent; font-size:12px; margin-top:10px; margin-left:10px; color:#666;">
+                         <div onchange="changecolor()">
+                        </div>
+                    </div>
+                    </div>
+                    <div class="input-box">
+                        <div class="input">
+                            <input type="text" maxlength="140" placeholder="Please input the content here, and press Ctrl to submit! " id="content" name="content" onchange=" changecolor()">
+                        </div>
+                        <div class="action">
+                            <button type="button" id="mjr_send" onclick="CHAT.submit();">Submit</button>
+                        </div>
+
+                         <!--button set-->
+                    <center><div class="items">
+                           <input id="colorStyle" type="color" placeHolder='#000' title="font color" onchange="changecolor()" />
+                           <input id="emoji" type="button" value="emoji" title="emoji" contenteditable="true" onclick="test()"></input>
+                          <!--english version of file input-->
+                           <input type="file" id="inputFile" name="inputFile" style="display:none" onchange="changeAgentContent()" />
+                           <input type="text" value="" disabled id="inputFileAgent" />
+                           <input type="button" onclick="document.getElementById('inputFile').click()" value="Browse..." />
+                          <!--english version of file input end-->
+                           <button id="clear">clear</button>
+                           <!--background color change start-->
+                            <input type="button" name="Submit" value="Skin" onclick="turncolors()">
+
+                           
+                    </div></center>
+                <!--button set end-->
+                        <!-- emoji -->
+                       
+                        <div class="container2">
+                        <ul id="emoji-list" class="emoji-list">
+                        <!--emoji list-->
+
+                        <li>
+                        <img src="client/emoji/1.gif" /></li>
+                        
+                        <li>
+                        <img src="client/emoji/2.gif" /></li>
+
+                        <li>
+                        <img id="emoji3" alt="emoji3" src="client/emoji/3.gif" /></li>
+
+                        <li>
+                        <img id="emoji4" alt="emoji4" src="client/emoji/4.gif" /></li>
+
+                        <li>
+                        <img id="emoji5" alt="emoji5" src="client/emoji/5.gif" /></li>
+
+                        <li>
+                        <img id="emoji6" alt="emoji6" src="client/emoji/6.gif" /></li>
+
+                        <li>
+                        <img id="emoji7" alt="emoji7" src="client/emoji/7.gif" /></li>
+
+                        <li>
+                        <img id="emoji8" alt="emoji8" src="client/emoji/8.gif" /></li>
+
+                        <li>
+                        <img id="emoji9" alt="emoji9" src="client/emoji/9.gif" /></li>
+
+                        <li>
+                        <img id="emoji10" alt="emoji10" src="client/emoji/10.gif" /></li>
+
+                        <li>
+                        <img id="emoji11" alt="emoji11" src="client/emoji/11.gif" /></li>
+                        
+                        <li>
+                        <img id="emoji12"alt="emoji12" src="client/emoji/12.gif" /></li>
+
+                         <li>
+                        <img id="emoji13" alt="emoji13" src="client/emoji/13.gif" /></li>
+
+                        <li>
+                        <img id="emoji14" alt="emoji14" src="client/emoji/14.gif" /></li>
+
+                        <li>
+                        <img id="emoji15" alt="emoji15" src="client/emoji/15.gif" /></li>
+
+                        <li>
+                        <img id="emoji16" alt="emoji16" src="client/emoji/16.gif" /></li>
+
+                        <li>
+                        <img id="emoji17" alt="emoji17" src="client/emoji/17.gif" /></li>
+
+                        <li>
+                        <img id="emoji18" alt="emoji18" src="client/emoji/18.gif" /></li>
+
+                        <li>
+                        <img id="emoji19" alt="emoji19" src="client/emoji/19.gif" /></li>
+
+                        <li>
+                        <img id="emoji20" alt="emoji20" src="client/emoji/20.gif" /></li>
+
+                        <li>
+                        <img id="emoji21" alt="emoji21" src="client/emoji/21.gif" /></li>
+                        
+                        <li>
+                        <img id="emoji22" alt="emoji22" src="client/emoji/22.gif" /></li>
+
+                         <li>
+                        <img id="emoji23" alt="emoji23" src="client/emoji/23.gif" /></li>
+
+                        <li>
+                        <img id="emoji24" alt="emoji24" src="client/emoji/24.gif" /></li>
+
+                        <li>
+                        <img id="emoji25" alt="emoji25" src="client/emoji/25.gif" /></li>
+
+                        <li>
+                        <img id="emoji26" alt="emoji26" src="client/emoji/26.gif" /></li>
+
+                        <li>
+                        <img id="emoji27" alt="emoji27" src="client/emoji/27.gif" /></li>
+
+                        <li>
+                        <img id="emoji28" alt="emoji28" src="client/emoji/28.gif" /></li>
+
+                        <li>
+                        <img id="emoji29" alt="emoji29" src="client/emoji/29.gif" /></li>
+
+                        <li>
+                        <img id="emoji30" alt="emoji30" src="client/emoji/30.gif" /></li>
+
+                        <li>
+                        <img id="emoji31" alt="emoji31" src="client/emoji/31.gif" /></li>
+
+                        <li>
+                        <img id="emoji32" alt="emoji32" src="client/emoji/32.gif" /></li>
+
+                         <li>
+                        <img id="emoji33" alt="emoji33" src="client/emoji/33.gif" /></li>
+
+                        <li>
+                        <img id="emoji34" alt="emoji34" src="client/emoji/34.gif" /></li>
+
+                        <li>
+                        <img id="emoji35" alt="emoji35" src="client/emoji/35.gif" /></li>
+
+                        <li>
+                        <img id="emoji36" alt="emoji36" src="client/emoji/36.gif" /></li>
+
+                        <li>
+                        <img id="emoji37" alt="emoji37" src="client/emoji/37.gif" /></li>
+
+                        <li>
+                        <img id="emoji38" alt="emoji38" src="client/emoji/38.gif" /></li>
+
+                        <li>
+                        <img id="emoji39" alt="emoji39" src="client/emoji/39.gif" /></li>
+
+                        <li>
+                        <img id="emoji40" alt="emoji40" src="client/emoji/40.gif" /></li>
+
+                         <li>
+                        <img id="emoji41" alt="emoji41" src="client/emoji/41.gif" /></li>
+
+                        <li>
+                        <img id="emoji42" alt="emoji42" src="client/emoji/42.gif" /></li>
+
+                         <li>
+                        <img id="emoji43" alt="emoji43" src="client/emoji/43.gif" /></li>
+
+                        <li>
+                        <img id="emoji44" alt="emoji44" src="client/emoji/44.gif" /></li>
+
+                        <li>
+                        <img id="emoji45" alt="emoji45" src="client/emoji/45.gif" /></li>
+
+                        <li>
+                        <img id="emoji46" alt="emoji46" src="client/emoji/46.gif" /></li>
+
+                        <li>
+                        <img id="emoji47" alt="emoji47" src="client/emoji/47.gif" /></li>
+
+                        <li>
+                        <img id="emoji48" alt="emoji48" src="client/emoji/48.gif" /></li>
+
+                        <li>
+                        <img id="emoji49" alt="emoji49" src="client/emoji/49.gif" /></li>
+
+                        <li>
+                        <img id="emoji50" alt="emoji50" src="client/emoji/50.gif" /></li>
+
+                         <li>
+                        <img id="emoji51" alt="emoji51" src="client/emoji/51.gif" /></li>
+
+                        <li>
+                        <img id="emoji52" alt="emoji52" src="client/emoji/52.gif" /></li>
+
+                         <li>
+                        <img id="emoji53" alt="emoji53" src="client/emoji/53.gif" /></li>
+
+                        <li>
+                        <img id="emoji54" alt="emoji54" src="client/emoji/54.gif" /></li>
+
+                        <li>
+                        <img id="emoji55" alt="emoji55" src="client/emoji/55.gif" /></li>
+
+                        <li>
+                        <img id="emoji56" alt="emoji56" src="client/emoji/56.gif" /></li>
+
+                        <li>
+                        <img id="emoji57" alt="emoji57" src="client/emoji/57.gif" /></li>
+
+                        <li>
+                        <img id="emoji58" alt="emoji58" src="client/emoji/58.gif" /></li>
+
+                        <li>
+                        <img id="emoji59" alt="emoji59" src="client/emoji/59.gif" /></li>
+
+                        <li>
+                        <img id="emoji60" alt="emoji60" src="client/emoji/60.gif" /></li>
+
+                        <li>
+                        <img id="emoji61" alt="emoji61" src="client/emoji/61.gif" /></li>
+
+                        <li>
+                        <img id="emoji62" alt="emoji62" src="client/emoji/62.gif" /></li>
+
+                         <li>
+                        <img id="emoji63" alt="emoji63" src="client/emoji/63.gif" /></li>
+
+                        <li>
+                        <img id="emoji64" alt="emoji64" src="client/emoji/64.gif" /></li>
+
+                        <li>
+                        <img id="emoji65" alt="emoji65" src="client/emoji/65.gif" /></li>
+
+                        <li>
+                        <img id="emoji66" alt="emoji66" src="client/emoji/66.gif" /></li>
+
+                        <li>
+                        <img id="emoji67" alt="emoji67" src="client/emoji/67.gif" /></li>
+
+                        <li>
+                        <img id="emoji68" alt="emoji68" src="client/emoji/68.gif" /></li>
+
+                        <li>
+                        <img id="emoji69" alt="emoji69" src="client/emoji/69.gif" /></li>
+
+                       
+                        
+
+                        <!--emoji list end-->
+                        <div>
+                        
+                       <li>
+                       <div class="hotel-lowest-price">
+                      <button id="close-detail" class="close-detail"> Close</button>
+                      </div>
+                      </li>
+                       </ul>
+                     
+                      </div>
+                      <!--emoji end-->
+       
+                    </div>
+                </div>
+            </div>
+        </div>
+         <!--chat box end-->
+        
+
+        <script type="text/javascript" src="./client/client.js"></script>
+        <script type="text/javascript" src="./server/hichat.js"></script>
+        <script type="text/javascript" src="./server/title.js"></script>
+        <script type="text/javascript">
+        
+         </script>
+
+
+    </body>
+</html>
